@@ -1,2 +1,17 @@
 # render.yaml
 services:
+  - type: web
+    name: jyotish-api # IMPORTANT: This MUST match your service name on Render exactly
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    # Remove pythonVersion from render.yaml for now, as we're setting it in UI
+    # pythonVersion: 3.9 
+    plan: free
+    disk:
+      name: swisseph-data
+      mountPath: /var/data
+    autoDeploy: true
+    systemPackages:
+      - build-essential
+      - python3-dev
